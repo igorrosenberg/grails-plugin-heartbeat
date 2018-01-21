@@ -26,11 +26,27 @@
             </ul>
             </g:hasErrors>
             <g:form action="save">
-                <fieldset class="form">
-                    <f:all bean="heartBeat"/>
-                </fieldset>
-                <fieldset class="buttons">
+                <div>
+                    <div style="float:left; width:70%">
+                        <fieldset class="form">
+                            <f:all bean="heartBeat"/>
+                        </fieldset>
+                    </div>
+                    <div style="float:left; width:30%">
+                        <div class='box'
+                             data-heart-beat-url='<g:createLink action="fetch"/>'><div class="data">
+                            <div class="spinner">
+                                <g:message code="spinner.alt" default="Loading&hellip;"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="error"></div>
+                </div>
+                <fieldset class="buttons" style="clear: both;">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <a class="test button" href="#" style=" float: right">
+                        ${message(code: 'default.button.test.label', default: 'Test')}
+                    </a>
                 </fieldset>
             </g:form>
         </div>

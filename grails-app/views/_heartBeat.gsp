@@ -4,8 +4,9 @@ Needed parameters:
 
 Optional parameters :
 - hideButtons
+- hideData
+- hideErrors
 - hideTitle
-- hideButtons
 
 --%>
 <div class="heartBeat main ${it.orderKey}">
@@ -23,7 +24,9 @@ Optional parameters :
 
         <g:if test="${!hideData}">
             <div class="data">
-                <asset:image src="spinner.gif" alt="Chargement..."/>
+                <div class="spinner" style="display:none;">
+                    <g:message code="spinner.alt" default="Loading&hellip;"/>
+                </div>
             </div>
         </g:if>
 

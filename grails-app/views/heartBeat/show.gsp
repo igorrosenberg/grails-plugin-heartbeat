@@ -19,11 +19,26 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="heartBeat" />
+            <div>
+                <div style="float:left; width:70%">
+                    <f:display bean="heartBeat" />
+                </div>
+                <div style="float:left; width:30%">
+                    <div class='box'
+                         data-heart-beat-url='<g:createLink action="fetch"/>'><div class="data">
+                        <div class="spinner">
+                            <g:message code="spinner.alt" default="Loading&hellip;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <g:form resource="${this.heartBeat}" method="DELETE">
-                <fieldset class="buttons">
+                <fieldset class="buttons" style="clear: both;">
                     <g:link class="edit" action="edit" resource="${this.heartBeat}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                    <a class="test button" href="#" style=" float: right">
+                        ${message(code: 'default.button.test.label', default: 'Test')}
+                    </a>
                 </fieldset>
             </g:form>
         </div>

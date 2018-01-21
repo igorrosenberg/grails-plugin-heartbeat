@@ -30,22 +30,24 @@
                 <g:hiddenField name="version" value="${this.heartBeat?.version}" />
                 <div >
                     <div style="float:left; width:70%">
-                    <fieldset class="form">
-                    <f:all bean="heartBeat"/>
-                    </fieldset>
-                </div>
+                        <fieldset class="form">
+                            <f:all bean="heartBeat"/>
+                        </fieldset>
+                    </div>
                     <div style="float:left; width:30%">
                         <div class='box'
-                             data-heart-beat-url='<g:createLink action="fetch"/>'
-                        ><div class="data">
-                            <asset:image src="spinner.gif" alt="Chargement..."/>
+                             data-heart-beat-url='<g:createLink action="fetch"/>'><div class="data">
+                            <div class="spinner">
+                                <g:message code="spinner.alt" default="Loading&hellip;"/>
+                            </div>
                         </div>
-                        </div>
-                        <div class="error"></div>
+                    </div>
+                    <div class="error"></div>
                 </div>
-                <fieldset class="buttons" style=" clear: both;">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                    <a class="test button" href="#" style=" float: right" >
+                <fieldset class="buttons" style="clear: both;">
+                    <input class="save" type="submit"
+                           value="${message(code: 'default.button.update.label', default: 'Update')}"/>
+                    <a class="test button" href="#" style=" float: right">
                         ${message(code: 'default.button.test.label', default: 'Test')}
                     </a>
                 </fieldset>

@@ -33,18 +33,10 @@
         float: left;
     }
 
-    .heartBeat.main.B5 {
-        width: 50%;
-    }
-
     </style>
 </head>
 
 <body>
-
-<div class="spinnerTemplate hidden">
-    <asset:image src="spinner.gif" alt="Chargement..."/>
-</div>
 
 <div>
     <div class="admin_link">
