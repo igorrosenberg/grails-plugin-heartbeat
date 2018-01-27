@@ -29,7 +29,7 @@
                 <div>
                     <div style="float:left; width:70%">
                         <fieldset class="form">
-                            <f:all bean="heartBeat" except="heartBeatParams"/>
+                            <f:all bean="heartBeat"/>
                         </fieldset>
                     </div>
                     <div style="float:left; width:30%">

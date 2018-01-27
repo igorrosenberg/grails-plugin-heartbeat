@@ -17,12 +17,14 @@ class HeartBeatController {
     }
 
     def fetch(HeartBeat heartBeat) {
+        println "IN_PARAMS=" + params.heartBeatParams
+
         if (!heartBeat) {
-            println "params=$params"
             heartBeat = new HeartBeat()
             bindData(heartBeat, params)
+            heartBeat.heartBeatParams = params.heartBeatParams.split(',').collect {HeartBeatParam.get (it as long)}
         }
-        println heartBeat.heartBeatParams.collect { it.name + '/' + it.value}.join()
+        println "H_PARAMS=" + heartBeat.heartBeatParams.collect { it.name + '/' + it.value}.join()
         def dataX = heartBeatService.getData(heartBeat)
         render(contentType: "text/json") {
             data(dataX)

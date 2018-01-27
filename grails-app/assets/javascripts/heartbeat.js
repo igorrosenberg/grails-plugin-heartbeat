@@ -129,7 +129,7 @@
             }
         );
 
-        // Only used in edit view
+        // Only used in show/edit CRUD views
         $('.test.button').click(
             function () {
                 // uselessly complicated - deals with show and create GSPs
@@ -141,6 +141,13 @@
                         return $('div[aria-labelledby='+name+'-label]').text();
                     };
                 }
+                var getParams = function() {
+                    return $('.fieldcontain ul li a').map(function(){
+                        var array = $(this).attr('href').split('/');
+                        return array[array.length-1];
+                    }).get().join();
+                };
+
                 var $this = $('.box');
                 $this.attr('data-heart-beat-display', get('display'));
                 var url = $this.attr('data-heart-beat-url');
@@ -149,6 +156,7 @@
                 url += '&display=' + encodeURIComponent(get('display'));
                 url += '&refreshRate=' + encodeURIComponent(get('refreshRate'));
                 url += '&script=' + encodeURIComponent(get('script'));
+                url += '&heartBeatParams=' + getParams();
                 fetchWaitLoop($this, false, url);
                 return false;
             });

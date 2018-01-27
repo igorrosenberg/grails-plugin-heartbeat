@@ -10,6 +10,7 @@ Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
 * Display HeartBeats as Graph
 * HeartBeats with parameters
 * CRUD for HeartBeats
+* Live configuration test within the CRUD GUI ("Test" button)
 * AJAX, GSP template, Controller, Service
 * _No security_: you MUST control access yourself when invoking the HeartBeat (recommendation: add a SpringSecurity URL rule on `/heartBeat`)
 * _No security_: you MUST make sure the `script` invoked do no nasty things, like in groovy `System.exit()` 
@@ -20,10 +21,14 @@ Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
 If you want to contribute, here are some ideas:
 
 * auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
-* remove useless files from the pugin code, like `grails-app/assets`,
-* remove jquery dependency
+* remove useless files from the pugin code, like `grails-app/assets`.
+* remove jquery dependency.
+* make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`). 
+* Optimize JS.
 * caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
- 
+* Improve add param GUI (using default grails generate-view/controller feels clunky).
+* Bug: "Test" button does not show http 500 when it occurs within the "show" view.
+
 #### GUIs
 
 A CRUD interface is available at `/heartbeat` :
