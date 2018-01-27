@@ -1,14 +1,15 @@
 package heartbeat
 
+import grails.transaction.Transactional
 import groovy.sql.Sql
 import groovy.text.SimpleTemplateEngine
 
 class HeartBeatService {
 
+    @Transactional(readOnly = true)
     def getData(HeartBeat metric) {
 
         String script = getExecutableScript(metric)
-        println "Running $script"
 
         // find proper execution engine
         if (metric.type == 'sql' && metric.display == 'text')
@@ -22,12 +23,9 @@ class HeartBeatService {
     }
 
     private String getExecutableScript(HeartBeat metric) {
-        println "metric.heartBeatParams: $metric.heartBeatParams"
         if (!metric.heartBeatParams)
             return metric.script
 
-        println "Script : $metric.script"
-        println "Replacing $metric.heartBeatParams"
         // else replace parameters (name -> value)
         def paramMap = metric.heartBeatParams.collectEntries {
             [(it.name): it.value]

@@ -82,9 +82,20 @@
         function fetchWaitLoop($this, infinite, url) {
             var refreshRate;
             infinite = (infinite === undefined ? true : infinite); // defaults to true, ie infinite loop
-            url = url || $this.attr('data-heart-beat-url'); // use attr if no url provided
             if (!url) {
-                error($this, "Could not read URL");
+                // if url not provided, build url via attr & input params
+                url = $this.attr('data-heart-beat-url');
+                if (!url) {
+                    error($this, "Could not read URL");
+                    return;
+                }
+                // append params as found in named input
+                url += '?' + $this.children('input').map(
+                    function(){
+                        var $sub_this = $(this);
+                        return 'heartBeatParams.' + $sub_this.attr('name') + '=' + $sub_this.val();
+                    }
+                ).get().join('&');
             }
             $.ajax({
                 url: url,
