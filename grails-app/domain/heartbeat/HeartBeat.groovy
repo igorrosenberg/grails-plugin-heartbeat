@@ -8,7 +8,7 @@ class HeartBeat {
     String display    // graph or text
     String orderKey   // anything which could be used to sort/filter
     String style      // css
-    String script     // code to execute
+    String script     // back-slash escaped code to execute
     Date dateCreated  // grails auto-managed
 
     static constraints = {
@@ -17,12 +17,17 @@ class HeartBeat {
         type         inList: ['sql', 'groovy']
         display      inList: ['graph', 'text']
         orderKey     blank: true
-        style        blank:true
+        style        blank:true, maxSize: 64000 // 64K is the max for SimpleTemplateEngine
         script       widget: 'textarea'
     }
+
+    static hasMany = [
+            heartBeatParams: HeartBeatParam, // optional parameters to apply
+    ]
 
     static mapping = {
         script type: 'text'
         style  type: 'text'
     }
+
 }

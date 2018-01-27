@@ -22,7 +22,7 @@ class HeartBeatController {
             heartBeat = new HeartBeat()
             bindData(heartBeat, params)
         }
-        println "===" + heartBeat.refreshRate
+        println heartBeat.heartBeatParams.collect { it.name + '/' + it.value}.join()
         def dataX = heartBeatService.getData(heartBeat)
         render(contentType: "text/json") {
             data(dataX)
