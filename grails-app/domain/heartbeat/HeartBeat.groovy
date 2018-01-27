@@ -30,4 +30,9 @@ class HeartBeat {
         style  type: 'text'
     }
 
+    @Override
+    String toString() {
+        title
+    }
+
 }

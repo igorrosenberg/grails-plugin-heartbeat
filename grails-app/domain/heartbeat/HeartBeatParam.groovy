@@ -18,4 +18,10 @@ class HeartBeatParam {
         value  blank: false
     }
 
+    @Override
+    String toString() {
+        name
+    }
+
+
 }
