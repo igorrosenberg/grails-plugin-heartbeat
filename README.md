@@ -11,8 +11,8 @@ Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
 * CRUD for HeartBeats
 * AJAX, GSP template, Controller, Service
 * _No security_: you MUST control access yourself when invoking the HeartBeat (recommendation: add a SpringSecurity URL rule on /heartBeat)
-* (upcoming) &lt;g:heartBeat&gt; TagLib
-* (upcoming) HeartBeats with parameters
+* (rejected) &lt;g:heartBeat&gt; TagLib
+* HeartBeats with parameters
 
  
 #### GUIs
@@ -24,6 +24,8 @@ A CRUD interface is available for your `HeartBeat`:
 Once you have created `HeartBeats`, you can use them anywhere in your application, for example in an admin page: 
 
 ![Display view](https://raw.githubusercontent.com/igorrosenberg/grails-plugin-heartbeat/documentation/display.png)
+
+
 
 #### HeartBeat SQL examples
 
