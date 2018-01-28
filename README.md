@@ -16,19 +16,6 @@ Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
 * _No security_: you MUST make sure the `script` invoked do no nasty things, like in groovy `System.exit()` 
 * ~~(rejected) &lt;g:heartBeat&gt; TagLib~~
 
-#### Help wanted
-
-If you want to contribute, here are some ideas:
-
-* auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
-* remove useless files from the pugin code, like `grails-app/assets`.
-* remove jquery dependency.
-* make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`). 
-* Optimize JS.
-* caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
-* Improve add param GUI (using default grails generate-view/controller feels clunky).
-* Bug: "Test" button does not show http 500 when it occurs within the "show" view.
-
 #### GUIs
 
 A CRUD interface is available at `/heartbeat` :
@@ -127,3 +114,46 @@ Pet.count()
 // Number of pets older than parameter age
 Pet.createCriteria().count { gt 'age', $age}
 ```
+
+#### Installation
+
+Within your own grails application:
+
+* Add the dependency to the plugin, in `/build.gradle`
+```
+dependencies {
+    compile "org.grails.plugins:heartbeat:2.1"
+```
+
+* Add the JavaScript code, in `/grails-app/assets/javascripts/application.js`
+```
+//= require jquery-2.2.0.min
+//= require chartjs.min
+//= require heartbeat
+```
+
+* Show the `HeartBeats`, by inserting within an access-protected GSP
+```
+<g:set var="list" value="${heartbeat.HeartBeat.list().sort { it.orderKey }}"/>
+
+<div class="my_data_line">
+    <g:render template="/heartBeat" collection="${list}" />
+</div>
+<g:link controller="heartBeat">HeartBeat Admin</g:link>
+```
+
+
+
+#### Help wanted
+
+If you want to contribute, here are some ideas:
+
+* auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
+* remove useless files from the plugin code, like `grails-app/assets`.
+* remove jquery dependency.
+* make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`). 
+* Optimize JS.
+* caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
+* Improve add param GUI (using default grails generate-view/controller feels clunky).
+* Bug: "Test" button does not show http 500 when it occurs within the "show" view.
+
