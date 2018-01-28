@@ -22,6 +22,10 @@ Optional parameters :
          data-heart-beat-display="${it.display}"
          data-heart-beat-title="${it.title}">
 
+<g:each in="${it.heartBeatParams}" var="param">
+    ${param.name} <input type="text" name="${param.name}" value="${param.value}" /><br/>
+</g:each>
+
         <g:if test="${!hideData}">
             <div class="data">
                 <div class="spinner" style="display:none;">

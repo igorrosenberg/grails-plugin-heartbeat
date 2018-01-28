@@ -8,6 +8,7 @@ import groovy.sql.Sql
 class HeartBeatController {
 
     def heartBeatService
+    def sessionFactory
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -18,12 +19,24 @@ class HeartBeatController {
 
     def fetch(HeartBeat heartBeat) {
         if (!heartBeat) {
-            println "params=$params"
             heartBeat = new HeartBeat()
             bindData(heartBeat, params)
+            if (params.heartBeatParams)
+                heartBeat.heartBeatParams = params.heartBeatParams.split(',').collect {HeartBeatParam.get (it as long)}
+        } else {
+            if (params.heartBeatParams)
+                params.heartBeatParams.each { k, v ->
+                    def hbp = heartBeat.heartBeatParams.find {
+                        it.name == k
+                    }
+                    if (hbp) {
+                        hbp.value = v
+                    }
+               }
         }
-        println "===" + heartBeat.refreshRate
+
         def dataX = heartBeatService.getData(heartBeat)
+        sessionFactory.currentSession.clear()     // make sure not to save HeartBeatParams
         render(contentType: "text/json") {
             data(dataX)
             style(heartBeat.style)

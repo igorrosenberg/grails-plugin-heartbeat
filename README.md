@@ -5,25 +5,88 @@ Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
 #### Features
 
 * Requires JQuery and [ChartJS](http://www.chartjs.org)
+* Auto-refresh
 * Display HeartBeats as String
 * Display HeartBeats as Graph
-* Auto-refresh
+* HeartBeats with parameters
 * CRUD for HeartBeats
+* Live configuration test within the CRUD GUI ("Test" button)
 * AJAX, GSP template, Controller, Service
-* _No security_: you MUST control access yourself when invoking the HeartBeat (recommendation: add a SpringSecurity URL rule on /heartBeat)
-* (upcoming) &lt;g:heartBeat&gt; TagLib
-* (upcoming) HeartBeats with parameters
+* _No security_: you MUST control access yourself when invoking the HeartBeat (recommendation: add a SpringSecurity URL rule on `/heartBeat`)
+* _No security_: you MUST make sure the `script` invoked do no nasty things, like in groovy `System.exit()` 
+* ~~(rejected) &lt;g:heartBeat&gt; TagLib~~
 
- 
+#### Help wanted
+
+If you want to contribute, here are some ideas:
+
+* auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
+* remove useless files from the pugin code, like `grails-app/assets`.
+* remove jquery dependency.
+* make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`). 
+* Optimize JS.
+* caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
+* Improve add param GUI (using default grails generate-view/controller feels clunky).
+* Bug: "Test" button does not show http 500 when it occurs within the "show" view.
+
 #### GUIs
 
-A CRUD interface is available for your `HeartBeat`:
+A CRUD interface is available at `/heartbeat` :
 
 ![Show view](https://raw.githubusercontent.com/igorrosenberg/grails-plugin-heartbeat/documentation/show.png)
 
 Once you have created `HeartBeats`, you can use them anywhere in your application, for example in an admin page: 
 
 ![Display view](https://raw.githubusercontent.com/igorrosenberg/grails-plugin-heartbeat/documentation/display.png)
+
+The code used to insert `HeartBeats` like in the previous picture:
+
+```
+<g:set var="list" value="${heartbeat.HeartBeat.list().sort { it.orderKey }}"/>
+<g:set var="hideButtons" value="${params.boolean('hideButtons')}"/>
+<g:set var="hideTitle" value="${params.boolean('hideTitle')}"/>
+<g:set var="hideButtons" value="${params.boolean('hideButtons')}"/>
+
+<div class="my_data_line">
+    <g:render 
+        template="/heartBeat" 
+        collection="${list.findAll { it.orderKey.startsWith 'A' }}"
+        />
+</div>
+
+<div class="my_data_line">
+    <g:render 
+        template="/heartBeat" 
+        collection="${list.findAll { it.orderKey.startsWith 'B' }}"
+        />
+</div>
+```
+
+#### Configuration
+
+The `<g:render template="/heartBeat"/>` template reads the following variables:
+- REQUIRED `it` (of type HeartBeat)
+- OPTIONAL `hideButtons` if set to `true`, will hide the edit/delete buttons
+- OPTIONAL `hideData` if set to `true`, will not show the `HeartBeat` data. It is hard to see why one would want to do this.
+- OPTIONAL `hideErrors` if set to `true`, errors while retrieving `HeartBeat` data will not appear.
+- OPTIONAL `hideTitle` if set to `true`, will not show the `HeartBeat` title
+
+Within the `HeartBeat` database table, the available fields are:
+
+* `title`: the name of the metric, which will be shown in HTML as the title of the block.
+* `refreshRate`: how often to refresh the metric, in seconds. A typical value would be 60.
+* `type`: currently only sql or groovy. It names the language used to interpret the script field.
+* `display`: currently graph or text. In HTML, the former will show as a ChartJs canvas, while the later will show as a simple text.
+* `orderKey`: used to sort or filter the HeartBeats. You may want to use `X-Y` matrix positioning, as in '5-3'. 
+* `style`: a css set of properties, applied to the HTML div surronding the rendered HeartBeat, you may want to add coloring here, like `"text-color:green;"`.      // css
+* `script`: back-slash escaped code to execute to fetch the data, written in SQL or Groovy. Examples provided below.
+
+When using `HeartBeatParam`, theses are simply 
+* `name`: the name of the parameters, used in the EL script. 
+* `value`: value that replaces the parameter.
+
+Scripts may come with parameters, using [Groovy's SimpleTemplateEngine](http://docs.groovy-lang.org/latest/html/documentation/template-engines.html#_simpletemplateengine).
+
 
 #### HeartBeat SQL examples
 
@@ -55,4 +118,12 @@ FROM
 ```
 // Number of pets
 Pet.count()
+```
+
+
+#### HeartBeatParam Groovy examples
+
+```
+// Number of pets older than parameter age
+Pet.createCriteria().count { gt 'age', $age}
 ```
