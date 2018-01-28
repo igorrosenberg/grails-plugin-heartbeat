@@ -21,7 +21,8 @@ class HeartBeatController {
         if (!heartBeat) {
             heartBeat = new HeartBeat()
             bindData(heartBeat, params)
-            heartBeat.heartBeatParams = params.heartBeatParams.split(',').collect {HeartBeatParam.get (it as long)}
+            if (params.heartBeatParams)
+                heartBeat.heartBeatParams = params.heartBeatParams.split(',').collect {HeartBeatParam.get (it as long)}
         } else {
             if (params.heartBeatParams)
                 params.heartBeatParams.each { k, v ->
