@@ -148,12 +148,14 @@ dependencies {
 
 If you want to contribute, here are some ideas:
 
-* auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
-* remove useless files from the plugin code, like `grails-app/assets`.
-* remove jquery dependency.
-* make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`). 
-* Optimize JS.
-* caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
-* Improve add param GUI (using default grails generate-view/controller feels clunky).
-* Bug: "Test" button does not show http 500 when it occurs within the "show" view.
+* (very easy) in ‘_hearbeat.gsp‘, add a ”fetch now" button
+* (easy) make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`).
+* (easy) Bug: "Test" button does not show http 500 when it Occurs within the "show" view.
+* (easy) in ‘_heartbeat.gsp‘, add a clock, showing how long before the data gets updated
+* (easy) remove useless files from the plugin code, like `grails-app/assets`.
+* (medium) remove jquery dependency. 
+* (medium) Optimize JS.
+* (medium) Improve add param GUI (using default grails generate-view/controller feels clunky).
+* (hard) auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
+* (hard) caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
 
