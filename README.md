@@ -153,9 +153,11 @@ If you want to contribute, here are some ideas:
 * (easy) Bug: "Test" button does not show http 500 when it Occurs within the "show" view.
 * (easy) in ‘_heartbeat.gsp‘, add a clock, showing how long before the data gets updated
 * (easy) remove useless files from the plugin code, like `grails-app/assets`.
-* (medium) remove jquery dependency. 
+* (easy) add pie-style charts, see [issue #3](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/3)
+* (medium) remove jquery dependency, reverting to vanilla JavaScript
 * (medium) Optimize JS.
 * (medium) Improve add param GUI (using default grails generate-view/controller feels clunky).
+* (hard) Make the js graph renderer configurable, so another chart library can be used, like [D3](https://github.com/d3/d3/wiki/Gallery
 * (hard) auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
 * (hard) caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
 
