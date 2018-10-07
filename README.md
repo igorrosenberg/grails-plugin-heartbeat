@@ -1,6 +1,6 @@
 # grails-plugin-heartbeat
 
-Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
+Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings, graphs or piecharts.
 
 #### Requirements
 
@@ -11,8 +11,7 @@ Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
 #### Features
 
 * Auto-refresh
-* Display HeartBeats as String
-* Display HeartBeats as Graph
+* Display HeartBeats as String, graphs, or piecharts
 * HeartBeats with parameters
 * CRUD for HeartBeats
 * Live configuration test within the CRUD GUI ("Test" button)
