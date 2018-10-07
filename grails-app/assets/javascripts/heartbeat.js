@@ -34,17 +34,8 @@
         }
 
         // draw a graph (via chartjs)
-        var plot = function (labels, data, $canvas_parent) {
-            var ctx;
-            var $canvas;
-            $canvas = $canvas_parent.children('canvas');
-            if ($canvas.length === 0) {
-                $canvas_parent.empty(); // could possibly optimize these 3 lines
-                $canvas_parent.append('<canvas></canvas>');
-                $canvas = $canvas_parent.children('canvas');
-            }
-            ctx = $canvas[0].getContext('2d');
-            new Chart(ctx, {            // is a new needed each time ?
+        var plot_graph = function (labels, data, backgroundColors, $canvas_parent) {
+            var chartConfig = {
                 type: 'bar',
                 options: {
                     scales: {yAxes: [{ticks: {beginAtZero: true}}]},
@@ -55,25 +46,68 @@
                     labels: labels,
                     datasets: [{
                         data: data,
+                        backgroundColor: backgroundColors,
                         borderWidth: 1
                     }]
                 }
-            });
-
+            };
+            plot_chart(chartConfig, $canvas_parent);
         };
 
+        // draw a piechart (via chartjs)
+        var plot_piechart = function (labels, data, backgroundColors, $canvas_parent) {
+            var chartConfig = {
+                type: 'pie',
+                options: {
+                    responsive: true
+                },
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderWidth: 1
+                    }]
+                }
+            };
+            plot_chart(chartConfig, $canvas_parent);
+        };
 
-        function update($data, remoteData, display) {
+        // draw any chart (via chartjs)
+        var plot_chart = function (chartConfig, $canvas_parent) {
+            var ctx;
+            var $canvas;
+            $canvas = $canvas_parent.children('canvas');
+            if ($canvas.length === 0) {
+                $canvas_parent.empty(); // could possibly optimize these 3 lines
+                $canvas_parent.append('<canvas></canvas>');
+                $canvas = $canvas_parent.children('canvas');
+            }
+            ctx = $canvas[0].getContext('2d');
+            new Chart(ctx, chartConfig);// is a new needed each time ?
+        };
+
+        function plot_data($data, remoteData, plot_function) {
             var labels = [];
             var data = [];
+            var backgroundColors = [];
+            remoteData.forEach(
+                function (item) {
+                    var val = Object.values(item);
+                    labels.push(val[0]);
+                    data.push(val[1]);
+                    if (val[2] !== undefined)
+                        backgroundColors.push(val[2]);
+                }
+            );
+            plot_function(labels, data, backgroundColors, $data);
+        }
+
+        function update($data, remoteData, display) {
             if (display === 'graph') {
-                remoteData.forEach(
-                    function (item) {
-                        labels.push(Object.values(item)[0]);
-                        data.push(Object.values(item)[1]);
-                    }
-                );
-                plot(labels, data, $data);
+                plot_data($data, remoteData, plot_graph);
+            } else if (display === 'piechart') {
+                plot_data($data, remoteData, plot_piechart);
             } else {
                 $data.text(remoteData); // html-injection safe
             }
@@ -91,11 +125,11 @@
                 }
                 // append params as found in named input
                 url += '?' + $this.children('input').map(
-                    function(){
-                        var $sub_this = $(this);
-                        return 'heartBeatParams.' + $sub_this.attr('name') + '=' + $sub_this.val();
-                    }
-                ).get().join('&');
+                        function () {
+                            var $sub_this = $(this);
+                            return 'heartBeatParams.' + $sub_this.attr('name') + '=' + $sub_this.val();
+                        }
+                    ).get().join('&');
             }
             $.ajax({
                 url: url,
@@ -111,7 +145,7 @@
                     update($data, data.data, $this.attr('data-heart-beat-display'));
                     error($this, ''); // clear error
                 }
-            ).fail(function (xhr, textStatus) {
+            ).error(function (xhr, textStatus) {
                 var message = (textStatus === 'error') ? 'http status ' + xhr.status : textStatus;
                 error($this, message);
             }).always(function () {
@@ -144,18 +178,18 @@
         $('.test.button').click(
             function () {
                 // uselessly complicated - deals with show and create GSPs
-                var get = function(name){
+                var get = function (name) {
                     return $('#' + name).val();
                 };
                 if (get('display') === undefined) {
-                    get = function(name){
-                        return $('div[aria-labelledby='+name+'-label]').text();
+                    get = function (name) {
+                        return $('div[aria-labelledby=' + name + '-label]').text();
                     };
                 }
-                var getParams = function() {
-                    return $('.fieldcontain ul li a').map(function(){
+                var getParams = function () {
+                    return $('.fieldcontain ul li a').map(function () {
                         var array = $(this).attr('href').split('/');
-                        return array[array.length-1];
+                        return array[array.length - 1];
                     }).get().join();
                 };
 

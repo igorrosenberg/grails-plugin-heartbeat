@@ -18,7 +18,7 @@ class HeartbeatGrailsPlugin extends Plugin {
     def title = "Heartbeat" // Headline display name of the plugin
     def author = "Igor Rosenberg"
     def authorEmail = ""
-    def description = 'Grails Plugin exposing user-defined metrics as numbers or graphs'
+    def description = 'Grails Plugin exposing user-defined metrics as numbers, graphs or piecharts'
     def profiles = ['web']
 
     // URL to the plugin's documentation
