@@ -1,13 +1,17 @@
 # grails-plugin-heartbeat
 
-Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings or graphs.
+Grails Plugin exposing user-defined metrics (`HeartBeat`) as strings, graphs or piecharts.
+
+#### Requirements
+
+* Requires [Grails 3.x](https://grails.org/)
+* Requires [JQuery](https://jquery.com/) and [ChartJS](http://www.chartjs.org)
+
 
 #### Features
 
-* Requires JQuery and [ChartJS](http://www.chartjs.org)
 * Auto-refresh
-* Display HeartBeats as String
-* Display HeartBeats as Graph
+* Display HeartBeats as String, graphs, or piecharts
 * HeartBeats with parameters
 * CRUD for HeartBeats
 * Live configuration test within the CRUD GUI ("Test" button)
@@ -142,18 +146,31 @@ dependencies {
 <g:link controller="heartBeat">HeartBeat Admin</g:link>
 ```
 
+#### Development
 
+```
+git clone https://github.com/igorrosenberg/grails-plugin-heartbeat.git
+gradle bootRun
+```
+
+A webserver then is running.
+* Add a new `HeartBeat` at `http://localhost:8080/heartBeat/create`
+* See it displayed at `http://localhost:8080/`
 
 #### Help wanted
 
 If you want to contribute, here are some ideas:
 
-* auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
-* remove useless files from the plugin code, like `grails-app/assets`.
-* remove jquery dependency.
-* make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`). 
-* Optimize JS.
-* caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
-* Improve add param GUI (using default grails generate-view/controller feels clunky).
-* Bug: "Test" button does not show http 500 when it occurs within the "show" view.
+* (very easy) in ‘_hearbeat.gsp‘, add a "fetch now" button, see [issue #4](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/4)
+* (easy) make CRUD-dedicated JS only applicable to heartbeat CRUD pages (search for `$('.test.button').click`), see [issue #5](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/5)
+* (easy) Bug: "Test" button does not show http 500 when it Occurs within the "show" view, see [issue #6](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/6)
+* (easy) in ‘_heartbeat.gsp‘, add a clock, showing how long before the data gets updated, see [issue #7](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/7)
+* (easy) remove useless files from the plugin code, like `grails-app/assets`, see [issue #8](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/8)
+* (easy) add pie-style charts, see [issue #3](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/3)
+* (medium) remove jquery dependency, reverting to vanilla JavaScript, see [issue #9](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/9)
+* (medium) Optimize JS, see [issue #10](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/10)
+* (medium) Improve add param GUI (using default grails generate-view/controller feels clunky), see [issue #11](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/11)
+* (hard) Make the js graph renderer configurable, so another chart library can be used, like [D3](https://github.com/d3/d3/wiki/Gallery
+* (hard) auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
+* (hard) caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
 
