@@ -166,11 +166,11 @@ If you want to contribute, here are some ideas:
 * (easy) Bug: "Test" button does not show http 500 when it Occurs within the "show" view, see [issue #6](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/6)
 * (easy) in ‘_heartbeat.gsp‘, add a clock, showing how long before the data gets updated, see [issue #7](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/7)
 * (easy) remove useless files from the plugin code, like `grails-app/assets`, see [issue #8](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/8)
-* (easy) add pie-style charts, see [issue #3](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/3)
+* ~~(easy) add pie-style charts, see [issue #3](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/3)~~ DONE
 * (medium) remove jquery dependency, reverting to vanilla JavaScript, see [issue #9](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/9)
 * (medium) Optimize JS, see [issue #10](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/10)
 * (medium) Improve add param GUI (using default grails generate-view/controller feels clunky), see [issue #11](https://github.com/igorrosenberg/grails-plugin-heartbeat/issues/11)
-* (hard) Make the js graph renderer configurable, so another chart library can be used, like [D3](https://github.com/d3/d3/wiki/Gallery
+* (hard) Make the js graph renderer configurable, so another chart library can be used, like [D3](https://github.com/d3/d3/wiki/Gallery)
 * (hard) auto-generate the doc: the README file is essentially copy-pasting the source code. It would be nice to simply dump the relevant code comments.
 * (hard) caching results - is this possible without adding heavy dependencies, maintaining genericity and configurability? Is caching even desireable?
 
