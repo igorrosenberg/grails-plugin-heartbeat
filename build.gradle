@@ -10,6 +10,7 @@ buildscript {
     }
 }
 
+
 version "2.2"
 group "org.grails.plugins"
 
@@ -18,6 +19,8 @@ apply plugin:"idea"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"asset-pipeline"
+
+apply plugin: "org.grails.grails-plugin-publish"
 
 repositories {
     mavenLocal()
@@ -61,4 +64,14 @@ bootRun {
 assets {
     minifyJs = true
     minifyCss = true
+}
+
+grailsPublish {
+    githubSlug = 'igorrosenberg/grails-plugin-heartbeat'
+    license {
+        name = 'Apache-2.0'
+    }
+    title = "Grails plugin: Heartbeat"
+    desc = "Grails Plugin exposing user-defined metrics as strings or graphs"
+    developers = [igorrosenberg:"Igor Rosenberg"]
 }
